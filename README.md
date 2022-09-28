@@ -1,4 +1,5 @@
 # REPOSITÓRIO COM TODAS AS ATIVIDADES DE COMPILADORES
+### Gabriela Sinastre, Karen Almeida, Maykon Borges
 
 ## 1 - Calculadora-Compiladores
 Projeto do desenvolvimento de uma calculadora
