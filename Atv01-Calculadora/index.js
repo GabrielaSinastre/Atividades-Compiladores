@@ -10,7 +10,7 @@ const operators = [
 
 function splitStrings(str) {
   let operatorsAux = [];
-  const re = new RegExp('[+, -]');
+  const re = new RegExp('[+, -, /, *, **, (, )]');
   for (let i = 0; i<str.length; i++) {
     if (operators.includes(str[i]) && !operatorsAux.includes(str[i])) operatorsAux.push(str[i]);
   }
