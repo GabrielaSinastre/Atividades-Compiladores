@@ -5,7 +5,7 @@ const reserved = [
 ];
 
 const simbols = [
-    '>', '<', '<>', '<=', '>=', ':=', '=', ';', ','
+    '>', '<', '<>', '<=', '>=', ':=', '=', ';', ',', '(', ')'
 ];
 
 const comments = [
@@ -34,30 +34,56 @@ function isNumber(codeSplited) {
     return !isNaN(Number(codeSplited));
 }
 
-function isIdentifier(str) {
-    return (/[a-zA-Z]/).test(str);
+function isIdentifier(codeSplited) {
+    return (/[a-zA-Z]/).test(codeSplited);
 };
 
-function IdentifierHasMaxLength(str) {
-    return str.length > 15;
+function IdentifierHasMaxLength(codeSplited) {
+    return codeSplited.length > 15;
 };
 
+function NumberHasMaxLength(codeSplited) {
+    return codeSplited.length > 20;
+};
+
+function getInputValue() {
+    return document.querySelector('textarea').value;
+}
+
+// Split code inputed and open modal if result lexical
 function calculateInput(e) {
     if (e) e.preventDefault();
-    const str = document.querySelector('input').value;
+    const str = getInputValue();
+
     const strSplited = splitCode(str);
     let message = '';
     for (let i = 0; i < strSplited.length; i++) {
         const char = strSplited[i];
-        if (isNumber(char)) message = message.concat('\n', `${char} -> NÚMERO`);
-        else if (isReserved(char)) message = message.concat('\n', `${char} -> PALAVRA RESERVADA`);
-        else if (isSimbol(char)) message = message.concat('\n', `${char} -> É UM SÍMBOLO`);
+        if (isNumber(char)) {
+            if (NumberHasMaxLength(char)) message = message.concat('\n\n', `ERRO: ${char} -> NUMERO PRECISA TER NO MÁXIMO 20 CARACTERES`);
+            else message = message.concat('\n\n', `${char} -> NÚMERO`);
+        }
+        else if (isReserved(char)) message = message.concat('\n\n', `${char} -> PALAVRA RESERVADA`);
+        else if (isSimbol(char)) message = message.concat('\n\n', `${char} -> É UM SÍMBOLO`);
         else if (isIdentifier(char)) {
-            if (IdentifierHasMaxLength(str)) message = message.concat('\n', `ERRO: ${char} -> IDENTIFICADOR PRECISA TER NO MÁXIMO 15 CARACTERES`);
-            else message = message.concat('\n', `${char} -> IDENTIFICADOR`);
+            if (IdentifierHasMaxLength(char)) message = message.concat('\n\n', `ERRO: ${char} -> IDENTIFICADOR PRECISA TER NO MÁXIMO 15 CARACTERES`);
+            else message = message.concat('\n\n', `${char} -> IDENTIFICADOR`);
         }
     }
 
-    window.alert(message);
+    const modal = document.getElementById('modal');
+    const content = document.querySelector('.content');
+    content.innerHTML = message;
+    modal.style.display = 'block';
     return message;
 };
+
+
+// Close modal when click outside
+window.onclick = function(event) {
+    const modal = document.getElementById('modal');
+
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
