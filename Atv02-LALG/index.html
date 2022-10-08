@@ -9,6 +9,14 @@
     <script src="index.js"></script>
   </head>
   <body style="padding: 20px">
+    <button
+      type="text"
+      id="clear"
+      onclick="clearInput()"
+      style="padding: 8px 16px; align-self: end; height: fit-content; margin: 16px 0"
+    >
+      Limpar
+    </button>
     <form style="width: 100%" onsubmit="calculateInput(event)">
       <label style="width: 80%; display: flex; gap: 8px">
         Insira o código:
@@ -17,6 +25,7 @@
           rows="30"
         ></textarea>
         <button
+          id="submit"
           type="submit"
           style="padding: 8px 16px; align-self: end; height: fit-content"
         >
@@ -28,11 +37,11 @@
     <div id="modal">
       <div class="content">
         <div>
-          <h1> Erros de compilação </h1>
+          <h2>Erros de compilação</h2>
           <p id="errors"></p>
         </div>
         <div>
-          <h1> Análise léxica </h1>
+          <h2>Análise léxica</h2>
           <p id="lexical"></p>
         </div>
       </div>

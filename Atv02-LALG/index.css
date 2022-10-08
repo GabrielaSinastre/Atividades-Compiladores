@@ -7,6 +7,18 @@
 button {
     cursor: pointer;
     border-radius: 4px;
+    font-weight: 700;
+}
+
+#clear {
+    background-color: transparent;
+    border: 1px solid rgb(28, 28, 118);
+    color: rgb(28, 28, 118);
+}
+
+#submit {
+    background-color: rgb(28, 28, 118);
+    color: white;
 }
 
 label {
@@ -14,7 +26,7 @@ label {
     font-weight: 600;
 }
 
-h1 {
+h2 {
     font-size: 20px;
     margin-bottom: -30px;
 }

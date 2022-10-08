@@ -66,6 +66,10 @@ function getInputValue() {
     return document.querySelector('textarea').value;
 }
 
+function clearInput() {
+    document.querySelector('textarea').value = '';
+}
+
 // Split code inputed and open modal if result lexical
 function calculateInput(e) {
     if (e) e.preventDefault();
