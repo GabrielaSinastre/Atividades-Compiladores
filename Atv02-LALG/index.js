@@ -70,6 +70,24 @@ function clearInput() {
     document.querySelector('textarea').value = '';
 }
 
+//function to check the variable declaration
+// function checkVariable(tokens){
+//     let variableTable = [];
+//     for (let i = 0; i < tokens.length; i++){
+//         if (tokens[i].includes('int')){
+//             for (let j = i + 1 ; j < tokens.length && !(tokens.includes(';')); j++ ){
+//                 if (tokens[j].includes('IDENTIFICADOR')){
+//                     variableTable.push(`${tokens[j]} tipo int`);
+//                 } else if {
+//                     variableTable.push(`${tokens[j]} erro na declaração`)
+//                 } else if () {
+                    
+//                 }
+//             }
+//         }
+//     }
+// }
+
 // Split code inputed and open modal if result lexical
 function calculateInput(e) {
     if (e) e.preventDefault();

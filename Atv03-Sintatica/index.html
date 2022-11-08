@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css" />
+    <script src="index.js"></script>
+  </head>
+  <body style="padding: 20px">
+    <button
+      type="text"
+      id="clear"
+      onclick="clearInput()"
+      style="padding: 8px 16px; align-self: end; height: fit-content; margin: 16px 0"
+    >
+      Limpar
+    </button>
+    <form style="width: 100%" onsubmit="calculateInput(event)">
+      <label style="width: 80%; display: flex; gap: 8px">
+        Insira o código:
+        <textarea
+          style="padding: 8px; border-radius: 4px; width: 60%"
+          rows="30"
+        ></textarea>
+        <button
+          id="submit"
+          type="submit"
+          style="padding: 8px 16px; align-self: end; height: fit-content"
+        >
+          Enviar
+        </button>
+      </label>
+    </form>
+
+    <div id="modal">
+      <div class="content">
+        <div>
+          <h2>Erros de compilação</h2>
+          <p id="errors"></p>
+        </div>
+        <div>
+          <h2>Análise léxica</h2>
+          <p id="lexical"></p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
