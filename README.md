@@ -8,9 +8,8 @@ Como usar a aplicação:
   - Inserir o cálculo desejado
   - Clicar em enviar para receber a análise da compilação
 
-## 2 - LALG-Compiladores
+## 2 - LALG
 Projeto para análise léxica da linguagem Pascal
 Como usar:
-  - Abrir o arquivo index.html
-  - Inserir o cálculo desejado
-  - Clicar em enviar para receber a análise da compilação
+  - Entrar na página LALG
+  - Usar o comando "node script.js"
