@@ -1,131 +1,39 @@
-const { toNestedList } = require('./parser.js');
+const util = require('util');
 
-const reserved = [
-    'program', 'procedure', 'var', 'int', 'boolean', 'read',
-    'write', 'true', 'false', 'begin', 'end', 'if', 'then',
-    'else', 'while', 'do', 'div', 'not',
-];
+const lexico = require('./lexical');
+const parser = require('./parser');
 
-const simbols = [
-    '>', '<', '<>', '<=', '>=', ':=', '=', ';', ',', '(', ')', ':',
-    '+',
-    '-',
-    '/',
-    '*',
-    '**',
-];
+// Coloque o código aqui
+const input = `program ADD_NUMEROS;
 
-const comments = [
-    '//', '{', '}'
-];
+var
 
-function splitCode(code) {
-    const splited = code.split(/(\s+|[+, -, /, *, **, (, ), <, >, <>, <=, =>, :=, =, ;, ,, //, {, }, :])/);
+X : integer;
 
-    for (let i = 0; i < splited.length; i++) {
-        if ((/(\s+)/).test(splited[i])) splited.splice(i, 1);
-    }
+A : integer;
 
-    return splited;
-};
+B : integer;
 
-function isReserved(codeSplited) {
-    return reserved.includes(codeSplited);
-};
+begin
 
-function isSimbol(codeSplited) {
-    return simbols.includes(codeSplited);
-};
+     writeln ('entre com o primeiro valor: ');
 
-function isComment(codeSplited) {
-    return comments.includes(codeSplited);
-}
+readln(A);
 
-function isNumber(codeSplited) {
-    return codeSplited && !isNaN(Number(codeSplited));
-}
+writeln ('entre com o segundo valor: ');
 
-function isIdentifier(codeSplited) {
-    return (/[a-zA-Z]/).test(codeSplited);
-};
+readln(B);
 
-function IdentifierHasMaxLength(codeSplited) {
-    return codeSplited.length > 15;
-};
+X := A + B;
 
-function NumberHasMaxLength(codeSplited) {
-    return codeSplited.length > 20;
-};
+writeln('A soma e = ', X);
 
-function verifyCommentIsClosed(codeSplitedArray) {
-    const allCommentsOpened = codeSplitedArray.filter((code) => code === '{');
-    const allCommentsClosed = codeSplitedArray.filter((code) => code === '}');
+end.`;
 
-    return allCommentsClosed.length === allCommentsOpened.length;
-}
+const { tokensPatterns, errors } = lexico(input);
+const parserErrors = parser(tokensPatterns);
 
-function getInputValue() {
-    return document.querySelector('textarea').value;
-}
+console.log('ANALISADOR LEXICO', util.inspect(tokensPatterns, false, null, true));
+console.log('Erros léxicos', util.inspect(errors, false, null, true));
 
-function clearInput() {
-    document.querySelector('textarea').value = '';
-}
-
-// Split code inputed and open modal if result lexical
-function calculateInput(e) {
-    if (e) e.preventDefault();
-    const str = getInputValue();
-
-    const strSplited = splitCode(str);
-
-    let message = '';
-    let errors = '';
-    for (let i = 0; i < strSplited.length; i++) {
-        const char = strSplited[i];
-        if (isNumber(char)) {
-            message = message.concat('\n\n', `${char} -> NÚMERO`);
-            if (NumberHasMaxLength(char)) errors = errors.concat('\n\n', `ERRO: ${char} -> NUMERO PRECISA TER NO MÁXIMO 20 CARACTERES`);
-        }
-        else if (isReserved(char)) message = message.concat('\n\n', `${char} -> PALAVRA RESERVADA`);
-        else if (isSimbol(char)) message = message.concat('\n\n', `${char} -> É UM SÍMBOLO`);
-        else if (isComment(char)) {
-            message = message.concat('\n\n', `${char} -> É UM SÍMBOLO DE COMENTÁRIO`);
-            if (!verifyCommentIsClosed(strSplited)) errors = errors.concat('\n\n', `ERRO: ${char} -> Comentário não foi fechado.`);
-        }
-        else if (isIdentifier(char)) {
-            message = message.concat('\n\n', `${char} -> IDENTIFICADOR`);
-            if (IdentifierHasMaxLength(char)) errors = errors.concat('\n\n', `ERRO: ${char} -> IDENTIFICADOR PRECISA TER NO MÁXIMO 15 CARACTERES`);
-        }
-        else if (char) {
-            console.log({ char });
-            errors = errors.concat('\n\n', `ERRO: ${char} -> CARACTER INVÁLIDO`);
-        }
-    }
-
-    // Open modal with message result  
-    const modal = document.getElementById('modal');
-    const lexical = document.getElementById('lexical');
-    const errorsMessage = document.getElementById('errors');
-    lexical.innerHTML = message;
-    if (errors === '') errorsMessage.innerHTML = '\n\nNão há erros';
-    else errorsMessage.innerHTML = errors;
-    modal.style.display = 'block';
-
-    return message;
-};
-
-// Close modal when click outside
-/* window.onclick = function (event) {
-    const modal = document.getElementById('modal');
-
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-} */
-
-// Iterate over all parsed trees and display them on HTML page
-for (var i in trees) {
-    htmlRepresentstion = '<ul>' + toNestedList(trees[i]) + '</ul>'
-    // embed htmlRepresentstion into HTML page
-  }
+console.log('ANALISADOR SINTATICO', util.inspect(parserErrors, false, null, true));
